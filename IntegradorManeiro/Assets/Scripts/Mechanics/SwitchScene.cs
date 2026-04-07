@@ -7,7 +7,7 @@ public class SwitchScene : MonoBehaviour
 {
    public void NextScene(string sceneName)
     {
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene(sceneName);
     }
 
 }
