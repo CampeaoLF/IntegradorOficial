@@ -1,80 +1,119 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Linq;
-
+using UnityEditor.Search;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class ChooseAnim : MonoBehaviour
 {
     private string animation;
     private bool value;
 
-    public List<GameObject> bottonSpecial;
-    public List<GameObject> bottonsimple;
-    public List<GameObject> bottonNormal;
+    public List<string> bottonSpecial = new List<string>();
+    private List<string> bottonSimple = new List<string>();
+    public List<string> bottonNormal = new List<string>();
 
     public GameObject simpleSelect;
     public GameObject normalSelect;
     public GameObject specialSelect;
 
-    public int qtdSimple;
-    public int qtdNormal;
-    public int qtdSpecial;
-
-    public string[] movsTags;
+    public int qtdMaxSimple = 2;
+    public int qtdMaxNormal = 1;
+    public int qtdMaxSpecial = 1;
 
     
 
 
-    public void ChooseSimple()
+    public Button nextPanelNormal;
+    public Button nextPanelSpecial;
+    public Button game;
+
+
+    public void ChooseSimple(string name)
     {
-        if (Input.touchCount == 1)
+        Debug.Log(name);
+
+        if (!bottonSimple.Contains(name) && bottonSimple.Count < qtdMaxSimple)
         {
+            bottonSimple.Add(name);
+            Debug.Log("Não existe na lista");
+        }
+        else
+        {
+            Debug.Log("Existe na lista");
+            bottonSimple.Remove(name);
+           
+        }
 
-            string[] movSimple = { "SMov1", "SMov2", "SMov3", "SMov4", "SMov5" };
+        Debug.Log("Quantidade de escolhas: " + bottonSimple.Count);
 
-
-
-            if (movSimple == null) return;
-            else if (movSimple.Contains("SMov1"))
-            {
-                simpleSelect.SetActive(false);
-                normalSelect.SetActive(true);
-            }
+        // colocar essa logica dentro de um botão de submit
+        if (bottonSimple.Count == qtdMaxSimple)
+        {
+            nextPanelNormal.gameObject.SetActive(true);
           
-
-
-        }
-    }
-
-    public void ChooseNormal()
-    {
-        qtdNormal++;
-        if (Input.touchCount == 1)
-        {
-            
-            if (qtdNormal == null) return;
-            else if (qtdNormal == 2)
-            {
-                simpleSelect.SetActive(false);
-                normalSelect.SetActive(false);
-                specialSelect.SetActive(true);
-            }
             
         }
-    }
-    public void ChooseSpecial()
-    {
-        qtdSpecial++;
 
-        if (qtdSpecial == null) return;
-        else if (qtdSpecial == 1)
+
+    }
+
+    public void NextPanelNormal()
+    {
+        simpleSelect.SetActive(false);
+        normalSelect.SetActive(true);
+    }
+    public void ChooseNormal(string name)
+    {
+        if(!bottonNormal.Contains(name) && bottonNormal.Count < qtdMaxNormal)
         {
-            SceneManager.LoadScene("MainGame");
+            bottonNormal.Add(name);
+            Debug.Log("Não existe na lista");
         }
-  
+        else
+        {
+            Debug.Log("Existe na lista");
+            bottonNormal.Remove(name);
+        }
+        Debug.Log("Quantidade de escolhas: " + bottonNormal.Count);
+        if (bottonNormal.Count == qtdMaxNormal)
+        {
+            nextPanelNormal.gameObject.SetActive(false);
+            nextPanelSpecial.gameObject.SetActive(true);
+        }
+    }
+    public void NextPanelSpecial()
+    {
+        simpleSelect.SetActive(false);
+        normalSelect.SetActive(false);
+        specialSelect.SetActive(true);
+    }
+    public void ChooseSpecial(string name)
+    {
+        if (!bottonSpecial.Contains(name) && bottonSpecial.Count < qtdMaxSpecial)
+        {
+            bottonSpecial.Add(name);
+            Debug.Log("Não existe na lista");
+        }
+        else
+        {
+            Debug.Log("Existe na lista");
+            bottonSpecial.Remove(name);
+        }
+        Debug.Log("Quantidade de escolhas: " + bottonSpecial.Count);
+        if (bottonSpecial.Count == qtdMaxSpecial)
+        {
+            game.gameObject.SetActive(true);
+        }
+
+    }
+
+    public void MainGame()
+    {
+        SceneManager.LoadScene("MainGame");
     }
     void Start()
     {
