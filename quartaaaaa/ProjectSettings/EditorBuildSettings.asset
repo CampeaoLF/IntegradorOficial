@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/HostMode/HostMode.unity
+    guid: 8061320afdb7b374da3e5c44556e441d
   m_configObjects: {}
